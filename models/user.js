@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-userSchema.plugin(encrypt, { secret: process.env.SECRET, encryptedFields: ["password"] })
+const skey = "adityasecret@database@key.is.this";
+userSchema.plugin(encrypt, { secret: skey, encryptedFields: ["password"] })
 
 export default mongoose.model('User', userSchema);
