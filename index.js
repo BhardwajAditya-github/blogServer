@@ -7,9 +7,11 @@ import userModel from './models/user.js';
 import blogModel from './models/blog.js';
 import connectDB from './config/db.js';
 import multer from 'multer';
+import ejs from 'ejs';
 // import mongoose from 'mongoose';
 
 const app = express();
+app.set('view engine', 'ejs');
 
 const __filename = fileURLToPath(import.meta.url);
 const rootDir = dirname(__filename);
@@ -32,10 +34,6 @@ connectDB()
 
 app.use(express.json())
 app.use(cors())
-
-app.get("/", (req, res) => {
-    res.send("<h1>Hello</h1>")
-})
 
 app.post("/signup", async (req, res) => {
     try {
@@ -195,5 +193,9 @@ app.get('/blogs/:title', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+app.get('/', (req, res) => {
+    res.render("home");
+})
 
 app.listen(3001, console.log("Server started at port 3001"));
